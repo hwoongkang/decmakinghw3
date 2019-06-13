@@ -12,7 +12,7 @@ addpath(genpath(pwd))
 tic
 N=30;
 boxSize = 30;
-vel = 20;
+vel = 150;
 dt = 0.01;
 tf = 2;
 filename = "convergenceCheckB";

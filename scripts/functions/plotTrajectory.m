@@ -18,17 +18,17 @@ for t=1:T
 	% 	end
 	plot(x(1,:,t),x(2,:,t),'ks','MarkerSize',7,'MarkerFaceColor','k');
 	hold on
-	quiver(x(1,:,t),x(2,:,t), v(1,:,t), v(2,:,t),0,'--k','LineWidth',0.8,'MaxHeadSize',0.5);
+	quiver(x(1,:,t),x(2,:,t), v(1,:,t)/10, v(2,:,t)/10,0,'k','LineWidth',0.8,'MaxHeadSize',0.5);
 	
 	plot(com(1,t),com(2,t),'ro','MarkerSize',8','MarkerFaceColor','r');
-	quiver(com(1,t),com(2,t),meanV(1,t),meanV(2,t),0,'r','LineWidth',2,'MaxHeadSize',1.2);
+	quiver(com(1,t),com(2,t),meanV(1,t)/10,meanV(2,t)/10,0,'r','LineWidth',2,'MaxHeadSize',1.2);
 	axis equal
-% 	xlim([-boxSize, boxSize]);
-% 	ylim([-boxSize,boxSize]);
+	xlim([-boxSize, boxSize]);
+	ylim([-boxSize,boxSize]);
 	grid on
 	legend(sprintf("t=%.3fs",(t-1)*0.01))
-	% 	xlim(com(1,t)+[-boxSize,boxSize])
-	% 	ylim(com(2,t)+[-boxSize,boxSize])
+% 		xlim(com(1,t)+[-boxSize,boxSize])
+% 		ylim(com(2,t)+[-boxSize,boxSize])
 % 	drawnow
 	frame = getframe(fig);
 	writeVideo(vid,frame);

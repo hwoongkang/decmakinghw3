@@ -8,5 +8,5 @@ mySys.plot();
 title("initial condition")
 mySys.simulate(tf)
 
-plotTrajectory(mySys.trajectory,vel*tf/2,filename)
+plotTrajectory(mySys.trajectory,vel*tf/5,filename)
 end
