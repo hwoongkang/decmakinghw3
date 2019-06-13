@@ -8,6 +8,9 @@ addpath(genpath(pwd))
 %%
 % problem1
 %%
+tic
 problem2
+toc
+plotTrajectory(mySys.trajectory.x,15)
 %%
 % problem3
