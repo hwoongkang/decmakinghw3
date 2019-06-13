@@ -26,11 +26,9 @@ classdef Agent < handle
 			obj.v = v0;
 		end
 		%% plotter
-		function plot(self,fig)
+		function plotHandle = plot(self,fig)
 			figure(fig)
-			hold on
-			plot(self.x(1),self.x(2),'ok','MarkerSize',5,'MarkerFaceColor','k')
-			hold off
+			plotHandle = plot(self.x(1),self.x(2),'ok','MarkerSize',5,'MarkerFaceColor','k');
 		end
 		%% dynamics
 		function update(self,u,dt)
