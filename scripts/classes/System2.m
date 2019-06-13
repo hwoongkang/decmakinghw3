@@ -1,14 +1,16 @@
 classdef System2 < handle
 	properties
 		N
+		boxSize
 		agents
-		dt = 5E-2;
+		dt
 		XLim;YLim;
-		K= - 0.1;
+		K=  0.5;
 		trajectory
 	end
 	properties (Dependent)
 		centerOfMass
+		meanV
 		x
 		v
 	end
@@ -20,6 +22,13 @@ classdef System2 < handle
 				sum = sum + obj.agents{i}.x;
 			end
 			cm = sum/obj.N;
+		end
+		function sum = get.meanV(obj)
+			sum = [0;0];
+			for i=1:obj.N
+				sum =sum + obj.agents{i}.v;
+			end
+			sum = sum/obj.N;
 		end
 		function x = get.x(obj)
 			x = zeros(2,obj.N);
@@ -34,13 +43,13 @@ classdef System2 < handle
 			end
 		end
 		%% constructor with circle radius, number of agents
-		function obj = System2(boxSize, vel, N)
-			
+		function obj = System2(N, boxSize, vel,dt)
+			obj.dt = dt;
 			obj.N = N;
 			
 			obj.agents = cell(1,N);
 			
-			x0s = -boxSize + 2 * boxSize * rand(2,N);
+			x0s = -boxSize/4 + 0.5* boxSize * rand(2,N);
 			
 			v0s = zeros(2,N);
 			for i = 1:N
@@ -56,18 +65,20 @@ classdef System2 < handle
 			
 			obj.XLim = [-boxSize, boxSize];
 			obj.YLim = [-boxSize, boxSize];
-			
+			obj.boxSize = boxSize;
 		end
 		%% plotter wrapping the agent plotters
 		function plot(self)
-			for i = 1:length(self.agents)
-				agent = self.agents{i}.plot();
-				axis equal;xlim(self.XLim);ylim(self.YLim)
-				hold on
-			end
+			x = self.x;
+			agent = plot(x(1,:),x(2,:),'ok','MarkerSize',5,'MarkerFaceColor','k');hold on;
+			v = self.v;
+			quiver(x(1,:),x(2,:),v(1,:), v(2,:),'--k','LineWidth',0.8)
 			com = self.centerOfMass;
 			comHandle = plot(com(1),com(2),'sr','MarkerSize',8,'MarkerFaceColor','r');
+			vel = self.meanV;
+			quiver(com(1),com(2),vel(1),vel(2),'r','LineWidth',2)
 			
+			axis equal;xlim(self.XLim);ylim(self.YLim)
 			legend([agent, comHandle], {"agents", "center of mass"});
 			hold off
 		end
@@ -75,33 +86,71 @@ classdef System2 < handle
 		function update(self)
 			N = self.N;
 			u = zeros(2,N);
+			v = self.v;
 			for agentNum = 1:N
-				vTemp = self.agents{agentNum}.v;
-				for agentNum2 = 1:N
-					u(:,agentNum) = u(:,agentNum) + self.K * (vTemp - self.agents{agentNum2}.v);
-				end
+				u(:,agentNum) = self.K*sum(v - v(:,agentNum),2);
+				% 				vTemp = self.agents{agentNum}.v;
+				%
+				% 				for agentNum2 = 1:N
+				% 					u(:,agentNum) = u(:,agentNum) + self.K * (self.agents{agentNum2}.v - vTemp);
+				% 				end
 			end
 			for agentNum = 1:N
 				self.agents{agentNum}.update(u(:,agentNum),self.dt);
 			end
-% 			self.plot();
+			% 			self.plot();
+		end
+		function update2(self)
+			N = self.N;
+			u = zeros(2,N);
+			for agentNum = 1:N
+				vTemp = self.v;
+				xTemp = self.x;
+				
+				vNow = vTemp(:,agentNum);
+				vTemp(:,agentNum) = [];
+				
+				xNow = xTemp(:,agentNum);
+				xTemp(:,agentNum) = [];
+				
+				vDiff = vTemp - vNow;
+				
+				xNorm = vecnorm(xTemp);
+				[~, ind] = sort(xNorm);
+				vDiff = vDiff(:,ind(1:10));
+				u(:,agentNum) = self.K*sum(vDiff,2);
+				
+			end
+			for agentNum = 1:N
+				self.agents{agentNum}.update(u(:,agentNum),self.dt);
+			end
 		end
 		function simulate(self,tf)
 			time = 0:self.dt:tf;
 			xTemp = zeros(2,self.N,length(time));
 			vTemp = zeros(2,self.N,length(time));
+			com = zeros(2,length(time));
+			meanV = zeros(2,length(time));
+			
 			xTemp(:,:,1) = self.x;
 			vTemp(:,:,1) = self.v;
-% 			self.plot();
-% 			drawnow
+			com(:,1) = self.centerOfMass;
+			meanV(:,1) = self.meanV;
+			% 			self.
+			% 			drawnow
 			for t = 2:length(time)
-				self.update();
+				self.update2();
+				% 				text(self.boxSize-1,-self.boxSize+1,sprintf("t = %.3fs", time(t)))
 				xTemp(:,:,t) = self.x;
 				vTemp(:,:,t) = self.v;
-% 				drawnow
+				com(:,t) = self.centerOfMass;
+				meanV(:,t) = self.meanV;
+				% 				drawnow
 			end
 			self.trajectory.x = xTemp;
 			self.trajectory.v = vTemp;
+			self.trajectory.com = com;
+			self.trajectory.meanV = meanV;
 		end
 	end
 end

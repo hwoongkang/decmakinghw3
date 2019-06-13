@@ -1,6 +1,7 @@
 %% The first script to be executed
 % as always
-close all; clear all;
+% close all; 
+clear all;
 % add all subfolders to the path
 addpath(genpath(pwd))
 
@@ -9,8 +10,13 @@ addpath(genpath(pwd))
 % problem1
 %%
 tic
-problem2
+N=30;
+boxSize = 30;
+vel = 20;
+dt = 0.01;
+tf = 2;
+filename = "convergenceCheckB";
+sys= problem2(N,boxSize, vel, dt,tf,filename);
 toc
-plotTrajectory(mySys.trajectory.x,15)
 %%
 % problem3

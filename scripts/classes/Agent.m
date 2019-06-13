@@ -65,10 +65,10 @@ function v = boxCheck(obj)
 	vx = vel(1); vy = vel(2);
 	
 	if x<-L || x>L
-		vx = -vx;
+% 		vx = -vx;
 	end
 	if y<-L || y>L
-		vy = -vy;
+% 		vy = -vy;
 	end
 	v = [vx;vy];
 end
