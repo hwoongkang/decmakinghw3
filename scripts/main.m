@@ -12,21 +12,33 @@ addpath(genpath(pwd))
 tic
 % number of agents
 N=30;
+
 % region to generate agents
 boxSize = 30;
+
 % mean of the initial velocity
 meanV = [10;10];
+
 % velocity circle
 vel = 30;
+
 % simulation rate
 dt = 0.01;
+
 % t_f
 tf = 2.5;
+
 % control gain
 K = 10;
+
+% collision avoidance
+distLimit = 2;
+
+% collision avoidance gain
+flockGain = 300;
 % current time as a filename
 filename = dateParser();
-prob2ans = problem2(N, boxSize, meanV, vel, K, dt, tf, filename);
+prob2ans = problem2(N, boxSize, meanV, vel, K, dt, tf,distLimit,flockGain,filename);
 plotTrajectory(prob2ans.trajC,vel*tf/5,filename)
 toc
 %%
