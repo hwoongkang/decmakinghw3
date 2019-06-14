@@ -3,3 +3,4 @@ figures/
 *.asv
 *.mp4
 pyscripts/
+*.mat
