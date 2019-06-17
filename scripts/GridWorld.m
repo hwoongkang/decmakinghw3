@@ -78,7 +78,7 @@ classdef GridWorld < handle
 		end
 		function valueIteration(self)
 			it = 0;
-			while(max(max(self.update()))>1E-7)
+			while(max(max(abs(self.update())))>1E-7)
 				it= it+1;
 			end
 			disp(it)
@@ -86,7 +86,7 @@ classdef GridWorld < handle
 		end
 		function draw(self)
 			figure;
-			h1=axes;
+			ax=gca;
 			[row, col] = size(self.cells);
 			for i=1:row
 				for j=1:col
@@ -95,14 +95,15 @@ classdef GridWorld < handle
 					else
 						clr = [1,1,1];
 					end
-					rectangle('Position',[i-1,j-1,1,1], 'FaceColor',clr);
-					text(i-0.7,j-0.5,string(self.cells{i,j}.utilityPre));
+					rectangle('Position',[j-1,i-1,1,1], 'FaceColor',clr);
+					text(j-0.7,i-0.5,string(self.cells{i,j}.utilityPre));
 					hold on
 				end
 			end
 			axis equal
-			xlim([0,row]);ylim([0,col]);
-			view([90,90])
+			ax.XAxisLocation = 'top';
+			xlim([0,col]);ylim([0,row]);
+% 			view([90,90])
 		end
 	end
 end

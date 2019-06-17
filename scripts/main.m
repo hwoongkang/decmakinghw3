@@ -40,7 +40,7 @@ flockGain = 300;
 filename = dateParser();
 %% problme 2 main
 prob2ans = problem2(N, boxSize, meanV, vel, K, dt, tf,distLimit,flockGain,filename);
-% plotTrajectory(prob2ans.trajC,dt,filename)
+plotTrajectory(prob2ans.trajC,dt,filename)
 toc
 %%
-% problem3
+problem3
