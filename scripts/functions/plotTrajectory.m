@@ -1,4 +1,4 @@
-function plotTrajectory(traj,boxSize,filename)
+function plotTrajectory(traj,dt,filename)
 x = traj.x;
 v = traj.v;
 com = traj.centerOfMass;
@@ -28,7 +28,7 @@ for t=1:T
 % 	xlim([-boxSize, boxSize]);
 % 	ylim([-boxSize,boxSize]);
 	grid on
-	legend(sprintf("t=%.3fs",(t-1)*0.01))
+	legend(sprintf("t=%.3fs",(t-1)*dt))
 % 		xlim(com(1,t)+[-boxSize,boxSize])
 % 		ylim(com(2,t)+[-boxSize,boxSize])
 % 	drawnow
