@@ -1,4 +1,4 @@
-function plotTrajectory(traj,dt,filename)
+function plotTrajectory(traj,dt,tf,filename)
 x = traj.x;
 v = traj.v;
 com = traj.centerOfMass;
@@ -9,8 +9,16 @@ vid = VideoWriter("..\figures\"+filename+".mp4",'MPEG-4');
 open(vid);
 figure;
 fig = gcf;
-	meanTemp = normc(meanV);
-for t=1:T
+meanTemp = normc(meanV);
+
+xMax = max(traj.x(1,:,end));
+yMax = max(traj.x(2,:,end));
+xMin = min(traj.x(1,:,end));
+yMin = min(traj.x(2,:,end));
+
+boxSize = 0.55*max(yMax-yMin,xMax-xMin);
+
+for t=1:tf/dt
 	hold off
 	% 	for n = 1:N
 	% 		plot(x(1,n,t),x(2,n,t),'ks','MarkerSize',5,'MarkerFaceColor','k');
@@ -29,8 +37,8 @@ for t=1:T
 % 	ylim([-boxSize,boxSize]);
 	grid on
 	legend(sprintf("t=%.3fs",(t-1)*dt))
-% 		xlim(com(1,t)+[-boxSize,boxSize])
-% 		ylim(com(2,t)+[-boxSize,boxSize])
+	xlim(com(1,t)+[-boxSize,boxSize])
+	ylim(com(2,t)+[-boxSize,boxSize])
 % 	drawnow
 	frame = getframe(fig);
 	for slowmo = 1:1

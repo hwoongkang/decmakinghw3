@@ -13,6 +13,8 @@ x = 20*cos(theta); y= 20*sin(theta);
 f3 = plot(x,y,':k');
 axis equal
 xlim([-45,45]);ylim([-45,45])
+xlabel("X Axis")
+ylabel("Y Axis")
 legend([f1,f2],{'start','goal'});
 grid on
 end

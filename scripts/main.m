@@ -7,9 +7,11 @@ addpath(genpath(pwd))
 
 %% Main executes the wrappers only
 rng shuffle
-r = rng;
+r = rng(1225734035);
 r.Seed
 % 1225561811
+% 1225734035
+% 1225746304 best!
 %%
 problem1
 %% problem 2 settings
@@ -30,7 +32,7 @@ vel = 30;
 dt = 0.005;
 
 % t_f
-tf = 5;
+tf = 7;
 
 % control gain
 K = 5;

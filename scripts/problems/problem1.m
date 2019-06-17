@@ -8,35 +8,65 @@ fig1=drawProb1();
 fig2=drawProb1();
 %% mean distance sum
 goalPerm = perms(1:8);
-distSum = 100000;
+minDist = 100000;
+minTime = 100000;
 for ind = 1:size(goalPerm,1)
 	goalTemp = goal(:,goalPerm(ind,:));
-	diff = start - goalTemp;
-	dist = sum(vecnorm(diff,2));
-	if dist<distSum
+	[distTemp,timeTemp,xTemp,yTemp] = feasibleTrajectory(start,goalTemp);
+% 	diff = start - goalTemp;
+% 	dist = sum(vecnorm(diff,2));
+	if sum(distTemp)<minDist
 		minSumPerm = goalPerm(ind,:);
-		distSum = dist;
+		minDist = sum(distTemp);
+		minDistTime= max(timeTemp);
+		x11=xTemp;
+		y11=yTemp;
 	end
-end
-dir = goal(:,minSumPerm) - start;
-figure(fig1);
-quiver(start(1,:),start(2,:),dir(1,:),dir(2,:),0,'k','LineWidth',1,'MaxHeadSize',0.2)
-title("Minimizing the Total Distance")
-%% mean time
-goalPerm = perms(1:8);
-maxDist = 100000;
-
-for ind = 1:size(goalPerm,1)
-	goalTemp = goal(:,goalPerm(ind,:));
-	diff = start -goalTemp;
-	dist = vecnorm(diff,2);
-	maxTemp = max(dist);
-	if maxTemp<maxDist
-		maxDist = maxTemp;
+	if max(timeTemp)<minTime
 		minTimePerm = goalPerm(ind,:);
+		x12 = xTemp;
+		y12 = yTemp;
+		time = timeTemp;
+		minTime = max(timeTemp);
+		minTimeDist = sum(distTemp);
 	end
 end
-dir = goal(:,minTimePerm) - start;
+dir1 = goal(:,minSumPerm) - start;
+figure(fig1);
+quiver(start(1,:),start(2,:),dir1(1,:),dir1(2,:),0,'k','LineWidth',1,'MaxHeadSize',0.2)
+for i=1:8
+	plot(x11(i,:),y11(i,:),'--r')
+end
+title("Minimizing the Total Distance")
+dir2 = goal(:,minTimePerm) - start;
 figure(fig2);
-quiver(start(1,:),start(2,:),dir(1,:),dir(2,:),0,'k','LineWidth',1,'MaxHeadSize',0.1);
+quiver(start(1,:),start(2,:),dir2(1,:),dir2(2,:),0,'k','LineWidth',1,'MaxHeadSize',0.2)
+for i=1:8
+	plot(x12(i,:),y12(i,:),'--r')
+end
 title("Minimizing the Moving Time")
+
+%% mean time
+% goalPerm = perms(1:8);
+% maxDist = 100000;
+% 
+% for ind = 1:size(goalPerm,1)
+% 	goalTemp = goal(:,goalPerm(ind,:));
+% 	diff = start -goalTemp;
+% 	dist = vecnorm(diff,2);
+% 	maxTemp = max(dist);
+% 	if maxTemp<maxDist
+% 		maxDist = maxTemp;
+% 		sum_ = sum(dist);
+% 		minTimePerm = goalPerm(ind,:);
+% 	end
+% end
+% dir = goal(:,minTimePerm) - start;
+% figure(fig2);
+% quiver(start(1,:),start(2,:),dir(1,:),dir(2,:),0,'k','LineWidth',1,'MaxHeadSize',0.1);
+% foo = feasibleTrajectory(start,goal(:,minTimePerm));
+% for i=1:8
+% 	bar = foo{2,i};
+% 	plot(bar.x,bar.y,'--r');
+% end
+% title("Minimizing the Moving Time")
