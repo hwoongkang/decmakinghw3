@@ -232,6 +232,7 @@ classdef System2 < handle
 				meanV_(:,t) = self.meanV;
 				% 				drawnow
 			end
+			traj.time = time;
 			traj.x = xTemp;
 			traj.v= vTemp;
 			traj.centerOfMass = centerOfMass_;

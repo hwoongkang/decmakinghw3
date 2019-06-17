@@ -7,7 +7,7 @@ addpath(genpath(pwd))
 
 %% Main executes the wrappers only
 %%
-% problem1
+problem1
 %% problem 2 settings
 tic
 % number of agents
@@ -26,10 +26,11 @@ vel = 30;
 dt = 0.005;
 
 % t_f
-tf = 2.5;
+tf = 5;
 
 % control gain
-K = 10;
+K = 5;
+% K=-3;
 
 % collision avoidance
 distLimit = 2;
@@ -40,7 +41,11 @@ flockGain = 300;
 filename = dateParser();
 %% problme 2 main
 prob2ans = problem2(N, boxSize, meanV, vel, K, dt, tf,distLimit,flockGain,filename);
-plotTrajectory(prob2ans.trajC,dt,filename)
+prob2check(prob2ans.trajA)
+prob2check(prob2ans.trajB)
+prob2check(prob2ans.trajC)
+% plotTrajectory(prob2ans.trajC,dt,filename)
 toc
 %%
-problem3
+history = problem3(0);
+history2 = problem3(0.1);

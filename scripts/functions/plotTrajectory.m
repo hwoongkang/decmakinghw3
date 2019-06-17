@@ -20,10 +20,10 @@ for t=1:T
 	vTemp = normc(v(:,:,t));
 	plot(x(1,:,t),x(2,:,t),'ks','MarkerSize',7,'MarkerFaceColor','k');
 	hold on
-	quiver(x(1,:,t),x(2,:,t), vTemp(1,:), vTemp(2,:),0,'k','LineWidth',0.8,'MaxHeadSize',0.5);
+	quiver(x(1,:,t),x(2,:,t), v(1,:,t)/5, v(2,:,t)/5,0,'k','LineWidth',0.8,'MaxHeadSize',0.5);
 	
 	plot(com(1,t),com(2,t),'ro','MarkerSize',8','MarkerFaceColor','r');
-	quiver(com(1,t),com(2,t),meanTemp(1,t),meanTemp(2,t),0,'r','LineWidth',2,'MaxHeadSize',1.2);
+	quiver(com(1,t),com(2,t),meanV(1,t)/5,meanV(2,t)/5,0,'r','LineWidth',2,'MaxHeadSize',1.2);
 	axis equal
 % 	xlim([-boxSize, boxSize]);
 % 	ylim([-boxSize,boxSize]);
@@ -33,7 +33,7 @@ for t=1:T
 % 		ylim(com(2,t)+[-boxSize,boxSize])
 % 	drawnow
 	frame = getframe(fig);
-	for slowmo = 1:5
+	for slowmo = 1:1
 		writeVideo(vid,frame);
 	end
 end

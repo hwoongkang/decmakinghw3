@@ -14,9 +14,9 @@ classdef Cell < handle
 		down
 	end
 	methods
-		function obj = Cell(reward, boolObstacle)
+		function obj = Cell(reward, pFault)
 			obj.reward =reward;
-			obj.isObstacle = boolObstacle;
+			obj.pFault = pFault;
 		end
 		function setNeighbors(self,left,right,up,down)
 			self.left = left;

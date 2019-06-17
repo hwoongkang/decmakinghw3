@@ -3,11 +3,11 @@ classdef GridWorld < handle
 		cells
 	end
 	methods
-		function obj = GridWorld(sz1,sz2)
+		function obj = GridWorld(sz1,sz2,pFault)
 			cells = cell(sz1,sz2);
 			for i=1:sz1
 				for j=1:sz2
-					cells{i,j} = Cell(-0.04,false);
+					cells{i,j} = Cell(-0.04,pFault);
 				end
 			end
 			%% top row
@@ -76,13 +76,16 @@ classdef GridWorld < handle
 				end
 			end
 		end
-		function valueIteration(self)
+		function out = valueIteration(self)
+			mapHistory = cell(1,500);
 			it = 0;
 			while(max(max(abs(self.update())))>1E-7)
 				it= it+1;
+				mapHistory{it} = self;
 			end
 			disp(it)
 			self.draw()
+			out = mapHistory(1,1:it);
 		end
 		function draw(self)
 			figure;
