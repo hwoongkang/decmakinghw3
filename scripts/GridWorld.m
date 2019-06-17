@@ -101,6 +101,7 @@ classdef GridWorld < handle
 				end
 			end
 			axis equal
+			axis ij
 			ax.XAxisLocation = 'top';
 			xlim([0,col]);ylim([0,row]);
 % 			view([90,90])
