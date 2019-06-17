@@ -141,6 +141,10 @@ classdef GridWorld < handle
 			axis ij
 			ax.XAxisLocation = 'top';
 			xlim([0,col]);ylim([0,row]);
+			xticks(0.5:col-0.5);
+			xticklabels(string(1:col));
+			yticks(0.5:row-0.5);
+			yticklabels(string(1:row));
 			% 			view([90,90])
 		end
 	end

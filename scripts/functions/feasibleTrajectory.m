@@ -104,7 +104,6 @@ for i=1:N
 	else
 		yy1 = slope1*(xx1-x1) + y1;
 		yy2 = slope2*(xx2-x2) + y2;
-		
 	end
 % 	temp.x = [xx1,xx2(2:end)];
 % 	temp.y = [yy1,yy2(2:end)];

@@ -12,8 +12,11 @@ r.Seed
 % 1225561811
 % 1225734035
 % 1225746304 best!
+% 1227369215
 %%
+tic
 problem1
+fprintf("Problem 1 takes %.2f seconds\n",toc)
 %% problem 2 settings
 tic
 % number of agents
@@ -50,9 +53,10 @@ prob2ans = problem2(N, boxSize, meanV, vel, K, dt, tf,distLimit,flockGain,filena
 prob2check(prob2ans.trajA)
 prob2check(prob2ans.trajB)
 prob2check(prob2ans.trajC)
-% plotTrajectory(prob2ans.trajC,dt,filename)
-toc
+% plotTrajectory(prob2ans.trajC,dt,3,filename)
+fprintf("Problem 2 takes %.2f seconds\n",toc)
 %%
+tic
 history = problem3(0);
 title("Optimal Policy: Deterministic")
 history{end}.draw(0);
@@ -61,3 +65,4 @@ history2 = problem3(0.1);
 title("Optimal Policy: With Faulty Moves")
 history2{end}.draw(0);
 title("Utilities: With Faulty Moves")
+fprintf("Problem 3 takes %.2f seconds\n",toc)
