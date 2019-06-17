@@ -7,7 +7,7 @@ classdef Cell < handle
 		nextUtility
 		isObstacle = false;
 		pFault = 0;
-		gamma = 0.95;
+		gamma = 0.9;
 		left
 		right
 		up
@@ -25,30 +25,6 @@ classdef Cell < handle
 			self.down = down;
 		end
 		function rewardList = get.utilities(self)
-			% 			if self.up == self
-			% 				rewardUp = 0;
-			% 			else
-			% 				rewardUp = self.up.rewardPre;
-			% 			end
-			% 			if self.down == self
-			% 				rewardDown = 0;
-			% 			else
-			% 				rewardDown = self.down.rewardPre;
-			% 			end
-			% 			if self.left == self
-			% 				rewardLeft = 0;
-			% 			else
-			% 				rewardLeft = self.left.rewardPre;
-			% 			end
-			% 			if self.right == self
-			% 				rewardRight = 0 ;
-			% 			else
-			% 				rewardRight = self.right.rewardPre;
-			% 			end
-			% 			rewardList = [rewardUp;
-			% 				rewardRight;
-			% 				rewardDown;
-			% 				rewardLeft];
 			rewardList = [ self.up.utilityPre;
 				self.right.utilityPre;
 				self.down.utilityPre;
@@ -67,28 +43,12 @@ classdef Cell < handle
 			dirNum = 0;
 			switch dir
 				case "up"
-					if self.up == self
-% 						rewardOut = 0;
-% 						return
-					end
 					dirNum = 1;
 				case "right"
-					if self.right == self
-% 						rewardOut = 0;
-% 						return
-					end
 					dirNum = 2;
 				case "down"
-					if self.down == self
-% 						rewardOut = 0;
-% 						return
-					end
 					dirNum = 3;
 				case "left"
-					if self.left == self
-% 						rewardOut = 0;
-% 						return
-					end
 					dirNum = 4;
 			end
 			utilities = self.utilities;

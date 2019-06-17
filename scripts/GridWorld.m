@@ -61,11 +61,13 @@ classdef GridWorld < handle
 			j = posGoal(2);
 			self.cells{i,j}.reward = 1;
 		end
-		function update(self)
+		function error = update(self)
 			[row,col] = size(self.cells);
+			error = zeros(row,col);
 			for i = 1:row
 				for j=1:col
 					self.cells{i,j}.update();
+					error(i,j) = self.cells{i,j}.utility - self.cells{i,j}.utilityPre;
 				end
 			end
 			for i=1:row
@@ -74,9 +76,17 @@ classdef GridWorld < handle
 				end
 			end
 		end
-		
+		function valueIteration(self)
+			it = 0;
+			while(max(max(self.update()))>1E-7)
+				it= it+1;
+			end
+			disp(it)
+			self.draw()
+		end
 		function draw(self)
 			figure;
+			h1=axes;
 			[row, col] = size(self.cells);
 			for i=1:row
 				for j=1:col
@@ -92,6 +102,7 @@ classdef GridWorld < handle
 			end
 			axis equal
 			xlim([0,row]);ylim([0,col]);
+			view([90,90])
 		end
 	end
 end
