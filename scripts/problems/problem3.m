@@ -1,5 +1,11 @@
 function output = problem3(pFault)
-disp("3. Reinforcement Learning")
+switch pFault
+	case 0
+		arg = "Deteminisitic";
+	otherwise
+		arg = "p = "+ string(pFault);
+end
+fprintf("3. Reinforcement Learning: %s\n",arg);
 obstacles = [2,2;
 	3,2;
 	4,4;

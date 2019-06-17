@@ -6,6 +6,10 @@ clear all;
 addpath(genpath(pwd))
 
 %% Main executes the wrappers only
+rng shuffle
+r = rng;
+r.Seed
+% 1225561811
 %%
 problem1
 %% problem 2 settings
@@ -48,4 +52,10 @@ prob2check(prob2ans.trajC)
 toc
 %%
 history = problem3(0);
+title("Optimal Policy: Deterministic")
+history{end}.draw(0);
+title("Utilities: Deterministic")
 history2 = problem3(0.1);
+title("Optimal Policy: With Faulty Moves")
+history2{end}.draw(0);
+title("Utilities: With Faulty Moves")

@@ -1,17 +1,21 @@
 classdef Cell < handle
 	properties
 		reward
-		utility
+		utility = 0;
 		utilityPre = 0;
-		utilities
-		nextUtility
 		isObstacle = false;
-		pFault = 0;
+		isGoal = false;
+		pFault
 		gamma = 0.9;
+		
 		left
 		right
 		up
 		down
+	end
+	properties (Dependent)
+		utilities
+		nextUtility
 	end
 	methods
 		function obj = Cell(reward, pFault)
@@ -60,6 +64,19 @@ classdef Cell < handle
 		end
 		function setPre(self)
 			self.utilityPre = self.utility;
+		end
+		function dir = checkNeighbors(self)
+			[~,ind] = max(self.utilities);
+			switch ind
+				case 1
+					dir = "up";
+				case 2
+					dir = "right";
+				case 3
+					dir = "down";
+				case 4
+					dir = "left";
+			end
 		end
 	end
 end

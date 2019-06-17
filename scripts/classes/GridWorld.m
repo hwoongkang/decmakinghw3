@@ -60,6 +60,7 @@ classdef GridWorld < handle
 			i=posGoal(1);
 			j = posGoal(2);
 			self.cells{i,j}.reward = 1;
+			self.cells{i,j}.isGoal = true;
 		end
 		function error = update(self)
 			[row,col] = size(self.cells);
@@ -84,10 +85,10 @@ classdef GridWorld < handle
 				mapHistory{it} = self;
 			end
 			disp(it)
-			self.draw()
+			self.draw(1)
 			out = mapHistory(1,1:it);
 		end
-		function draw(self)
+		function draw(self,mode)
 			figure;
 			ax=gca;
 			[row, col] = size(self.cells);
@@ -99,15 +100,48 @@ classdef GridWorld < handle
 						clr = [1,1,1];
 					end
 					rectangle('Position',[j-1,i-1,1,1], 'FaceColor',clr);
-					text(j-0.7,i-0.5,string(self.cells{i,j}.utilityPre));
-					hold on
+					if ~self.cells{i,j}.isObstacle
+						if mode == 0
+							text(j-0.7,i-0.5,sprintf("%.2f",self.cells{i,j}.utilityPre));
+						else
+							if ~self.cells{i,j}.isGoal
+								switch self.cells{i,j}.checkNeighbors()
+									case "up"
+										xTemp = j-0.5;
+										yTemp = i-0.25;
+										dirX = 0;
+										dirY = -0.5;
+									case "down"
+										xTemp = j-0.5;
+										yTemp = i-0.75;
+										dirX = 0;
+										dirY = 0.5;
+									case "right"
+										xTemp = j-0.75;
+										yTemp = i-0.5;
+										dirX = 0.5;
+										dirY = 0;
+									case "left"
+										xTemp = j-0.25;
+										yTemp = i-0.5;
+										dirX = -0.5;
+										dirY = 0;
+								end
+								quiver(xTemp,yTemp,dirX,dirY,0,'k','LineWidth',1,'MaxHeadSize',1)
+								
+								hold on
+							else
+								text(j-0.78,i-0.5,"GOAL")
+							end
+						end
+					end
 				end
 			end
 			axis equal
 			axis ij
 			ax.XAxisLocation = 'top';
 			xlim([0,col]);ylim([0,row]);
-% 			view([90,90])
+			% 			view([90,90])
 		end
 	end
 end
