@@ -1,4 +1,4 @@
-classdef GridWorld < handle
+classdef GridWorld < handle & matlab.mixin.Copyable
 	properties
 		cells
 	end
@@ -82,7 +82,7 @@ classdef GridWorld < handle
 			it = 0;
 			while(max(max(abs(self.update())))>1E-7)
 				it= it+1;
-				mapHistory{it} = self;
+				mapHistory{it} = copy(self);
 			end
 			disp(it)
 			self.draw(1)

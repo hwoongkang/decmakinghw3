@@ -6,16 +6,16 @@ clear all;
 addpath(genpath(pwd))
 
 %% Main executes the wrappers only
-rng shuffle
-r = rng(1225734035);
+% rng shuffle
+rng(1232123070)
+r = rng;
 r.Seed
 % 1225561811
-% 1225734035
-% 1225746304 best!
-% 1227369215
+% 1232123070 %b가 좋음
+% 1232110727 %C가 좋음
 %%
 tic
-problem1
+% problem1
 fprintf("Problem 1 takes %.2f seconds\n",toc)
 %% problem 2 settings
 tic
@@ -23,13 +23,13 @@ tic
 N=30;
 
 % region to generate agents
-boxSize = 30;
+boxSize = 14;
 
 % mean of the initial velocity
 meanV = [10;10];
 
 % velocity circle
-vel = 30;
+vel = 20;
 
 % simulation rate
 dt = 0.005;
@@ -49,20 +49,12 @@ flockGain = 300;
 % current time as a filename
 filename = dateParser();
 %% problme 2 main
-prob2ans = problem2(N, boxSize, meanV, vel, K, dt, tf,distLimit,flockGain,filename);
-prob2check(prob2ans.trajA)
-prob2check(prob2ans.trajB)
-prob2check(prob2ans.trajC)
+% prob2ans = problem2(N, boxSize, meanV, vel, K, dt, tf,distLimit,flockGain,filename);
+
+% prob2plotter(prob2ans)
 % plotTrajectory(prob2ans.trajC,dt,3,filename)
 fprintf("Problem 2 takes %.2f seconds\n",toc)
 %%
 tic
-history = problem3(0);
-title("Optimal Policy: Deterministic")
-history{end}.draw(0);
-title("Utilities: Deterministic")
-history2 = problem3(0.1);
-title("Optimal Policy: With Faulty Moves")
-history2{end}.draw(0);
-title("Utilities: With Faulty Moves")
+prob3main
 fprintf("Problem 3 takes %.2f seconds\n",toc)

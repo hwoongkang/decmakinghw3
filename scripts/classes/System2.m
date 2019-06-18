@@ -31,7 +31,7 @@ classdef System2 < handle
 			obj.K = K;
 			obj.agents = cell(1,N);
 			
-			x0s = -boxSize/4 + 0.5* boxSize * rand(2,N);
+			x0s = -boxSize/2 + boxSize * rand(2,N);
 			
 			v0s = zeros(2,N);
 			for i = 1:N
@@ -96,11 +96,11 @@ classdef System2 < handle
 			x = self.x;
 			agent = plot(x(1,:),x(2,:),'ok','MarkerSize',5,'MarkerFaceColor','k');hold on;
 			v = self.v;
-			quiver(x(1,:),x(2,:),v(1,:), v(2,:),'--k','LineWidth',0.8)
+			quiver(x(1,:),x(2,:),v(1,:)/10, v(2,:)/10,0,'--k','LineWidth',0.8)
 			com = self.centerOfMass;
 			comHandle = plot(com(1),com(2),'sr','MarkerSize',8,'MarkerFaceColor','r');
 			vel = self.meanV;
-			quiver(com(1),com(2),vel(1),vel(2),'r','LineWidth',2)
+			quiver(com(1),com(2),vel(1)/10,vel(2)/10,0,'r','LineWidth',2)
 			
 			axis equal;xlim(self.XLim);ylim(self.YLim)
 			legend([agent, comHandle], {"agents", "center of mass"});
